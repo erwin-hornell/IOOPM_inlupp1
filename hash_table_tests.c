@@ -1,4 +1,6 @@
 #include <CUnit/Basic.h>
+#include "hash_table.h"
+
 
 int init_suite(void) {
   // Change this function if you want to do something *before* you
@@ -14,12 +16,118 @@ int clean_suite(void) {
 
 // These are example test functions. You should replace them with
 // functions of your own.
-void test_create_ht(void) {
-  CU_ASSERT(42);
+void test_create_destroy()
+{
+   ioopm_hash_table_t *ht = ioopm_hash_table_create();
+   CU_ASSERT_PTR_NOT_NULL(ht);
+   ioopm_hash_table_destroy(ht);
 }
 
-void test2(void) {
-  CU_ASSERT_EQUAL(1 + 1, 2);
+void test_look_up_empty()
+{
+  // create new hash table
+  ioopm_hash_table_t *ht = ioopm_hash_table_create();
+
+  char *key = "abc";
+
+  // check that key is not in ht
+  int result = 0;
+  CU_ASSERT_FALSE(ioopm_hash_table_lookup(ht, key, &result));
+  CU_ASSERT_EQUAL(result, 0);
+
+  ioopm_hash_table_destroy(ht);
+}
+
+
+void test_insert_once()
+{
+  // create new hash table
+  ioopm_hash_table_t *ht = ioopm_hash_table_create();
+
+  char *key = "abc";
+  int value = 123;
+
+  // check that key is not in ht
+  int result = 0;
+  CU_ASSERT_FALSE(ioopm_hash_table_lookup(ht, key, &result));
+  CU_ASSERT_EQUAL(result, 0);
+
+  // insert key-value pair and check that the mapping exists
+  ioopm_hash_table_insert(ht, key, value);
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(ht, key, &result));
+  CU_ASSERT_EQUAL(result, value);
+
+  // destroy hash table
+  ioopm_hash_table_destroy(ht);
+}
+
+void test_insert_update()
+{
+    // create new hash table
+  ioopm_hash_table_t *ht = ioopm_hash_table_create();
+
+  char *key = "abc";
+  int value1 = 123;
+  int value2 = 456;
+  int result = 0;
+
+  // insert key-value pair and check that the mapping exists
+  ioopm_hash_table_insert(ht, key, value1);
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(ht, key, &result));
+  CU_ASSERT_EQUAL(result, value1);
+
+  // insert key-value pair and check that the mapping exists
+  ioopm_hash_table_insert(ht, key, value2);
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(ht, key, &result));
+  CU_ASSERT_EQUAL(result, value2);
+
+  // destroy hash table
+  ioopm_hash_table_destroy(ht);
+}
+
+void test_remove_empty()
+{
+  // create new hash table
+  ioopm_hash_table_t *ht = ioopm_hash_table_create();
+
+  char *key = "abc";
+  int res = 0;
+  // insert key-value pair and check that the mapping exists
+  CU_ASSERT_FALSE(ioopm_hash_table_remove(ht, key, &res));
+
+
+  // destroy hash table
+  ioopm_hash_table_destroy(ht);
+}
+
+void test_remove_existing()
+{
+  // create new hash table
+  ioopm_hash_table_t *ht = ioopm_hash_table_create();
+
+  char *key = "abc";
+  int value = 123;
+
+  // check that key is not in ht
+  int res_lookup = 0;
+  int res_remove = 0;
+
+  // insert key-value pair and check that the mapping exists
+  ioopm_hash_table_insert(ht, key, value);
+  CU_ASSERT_TRUE(ioopm_hash_table_lookup(ht, key, &res_lookup));
+  CU_ASSERT_EQUAL(res_lookup, value);
+
+  CU_ASSERT_TRUE(ioopm_hash_table_remove(ht, key, &res_remove));
+  CU_ASSERT_EQUAL(res_remove, value);
+  CU_ASSERT_FALSE(ioopm_hash_table_lookup(ht, key, &res_lookup));
+
+  // destroy hash table
+  ioopm_hash_table_destroy(ht);
+}
+
+void test_remove_non_existing()
+{
+
 }
 
 int main() {
@@ -29,8 +137,8 @@ int main() {
 
   // We then create an empty test suite and specify the name and
   // the init and cleanup functions
-  CU_pSuite my_test_suite = CU_add_suite("My awesome test suite", init_suite, clean_suite);
-  if (my_test_suite == NULL) {
+  CU_pSuite hash_suite = CU_add_suite("Suite to test hash tables", init_suite, clean_suite);
+  if (hash_suite == NULL) {
       // If the test suite could not be added, tear down CUnit and exit
       CU_cleanup_registry();
       return CU_get_error();
@@ -42,8 +150,12 @@ int main() {
   // the test in question. If you want to add another test, just
   // copy a line below and change the information
   if (
-    (CU_add_test(my_test_suite, "A simple test", test_create_ht) == NULL) ||
-    (CU_add_test(my_test_suite, "Basic arithmetics", test2) == NULL) ||
+    (CU_add_test(hash_suite, "Create & destroy", test_create_destroy) == NULL) ||
+    (CU_add_test(hash_suite, "Look up key in empty ht", test_look_up_empty) == NULL) ||
+    (CU_add_test(hash_suite, "Insert in ht", test_insert_once) == NULL) ||
+    (CU_add_test(hash_suite, "Update existing key", test_insert_update) == NULL) ||
+    (CU_add_test(hash_suite, "Remove key from empty ht", test_remove_empty) == NULL) ||
+    (CU_add_test(hash_suite, "Remove existing key from ht", test_remove_existing) == NULL) ||
     0
   )
     {
