@@ -1,5 +1,5 @@
 #pragma once
-
+#include <stdbool.h>
 /**
 * @file hash_table.h
 * @author write both your names here

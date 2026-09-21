@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "hash_table.h"
-#define No_Buckets 17
+#define No_buckets 17
 typedef struct entry entry_t;
 
 struct entry
@@ -15,9 +15,9 @@ struct entry
 
 struct hash_table
 {
-  // DODGE: hard-coding number of buckets as No_Buckets.
+  // DODGE: hard-coding number of buckets as No_buckets.
   // NOTE: addressing this dodge is optional.
-  entry_t buckets[No_Buckets];
+  entry_t buckets[No_buckets];
 };
 
 static entry_t *entry_create(char *key, int value, entry_t *next)
@@ -50,8 +50,8 @@ ioopm_hash_table_t *ioopm_hash_table_create(void) {
 
 
 void ioopm_hash_table_destroy(ioopm_hash_table_t *ht) {
- // DOGE: update as to not only handle ht of length No_Buckets 
- for(int i = 0; i < No_Buckets; i++)
+ // DOGE: update as to not only handle ht of length No_buckets 
+ for(int i = 0; i < No_buckets; i++)
  {
     bucket_destroy(&ht->buckets[i]);
  }
@@ -72,7 +72,7 @@ static size_t string_knr_hash(const char *str)
 
 static entry_t *find_previous_entry(ioopm_hash_table_t *ht, char *key)
 {
-  size_t bucket = string_knr_hash(key) % No_Buckets;
+  size_t bucket = string_knr_hash(key) % No_buckets;
 
   entry_t *prev = &ht->buckets[bucket];
   entry_t *current = prev->next;
@@ -131,4 +131,54 @@ bool ioopm_hash_table_remove(ioopm_hash_table_t *ht, char *key, int *result)
     prev->next = entry_destroy(prev->next);
     return true;
   }
+}
+
+//Itor:
+
+bool ioopm_hash_table_has_key(ioopm_hash_table_t *ht, char *key)
+{
+  entry_t *prev = find_previous_entry(ht, key);
+  if(prev->next == NULL)
+  {
+    return false;
+  }
+  else
+  { 
+    return true;
+  }
+}
+
+
+bool ioopm_hash_table_is_empty(ioopm_hash_table_t *ht)
+{
+
+  for(int i = 0; i < No_buckets; i++)
+  {
+    if(!ht->buckets[i].next)
+    {
+      return false;
+    }
+  }
+  
+  return true;
+}
+
+static int bucket_size(entry_t *entry)
+{
+  int size = 0;
+  while(entry->next != NULL)
+  {
+    entry = entry->next;
+    size++;
+  }
+  return size;
+}
+
+int ioopm_hash_table_size(ioopm_hash_table_t *ht)
+{
+  int size = 0;
+for (int i = 0; i < No_buckets; i++) {
+  size += bucket_size(ht->buckets[i].next);
+}
+return size;
 }
