@@ -41,3 +41,19 @@ bool ioopm_hash_table_lookup(ioopm_hash_table_t *ht, char *key, int *result);
 /// @param result ptr to value of the removed key, unchaged if failed
 /// @return the value mapped to by key (FIXME: what if the key does not exist?)
 bool ioopm_hash_table_remove(ioopm_hash_table_t *ht, char *key, int *result);
+
+/// @brief Returns if a given key is in the hash table
+/// @param ht hash table we check
+/// @param key key to look up
+/// @return true if key is present else false
+bool ioopm_hash_table_has_key(ioopm_hash_table_t *ht, char *key);
+
+/// @brief Checks if hash table is empty
+/// @param ht hash table we check
+/// @return true if hash table is empty
+bool ioopm_hash_table_is_empty(ioopm_hash_table_t *ht);
+
+/// @brief Returns size of given hash table
+/// @param ht hash table we check
+/// @return Size of the hash table
+int ioopm_hash_table_size(ioopm_hash_table_t *ht);

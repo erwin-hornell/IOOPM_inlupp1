@@ -180,5 +180,5 @@ int ioopm_hash_table_size(ioopm_hash_table_t *ht)
 for (int i = 0; i < No_buckets; i++) {
   size += bucket_size(ht->buckets[i].next);
 }
-return size;
+  return size;
 }
