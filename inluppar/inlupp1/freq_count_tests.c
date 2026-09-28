@@ -2,8 +2,9 @@
 //#include "hash_table.h"
 //#include "hash_table_iterator.h"
 #include "freq_count.h"
+//#define TESTING
 
-void test_one_pw(){
+void test_one_pros_wrd(){
   ioopm_hash_table_t *ht = ioopm_hash_table_create();
   char *wrd1 = "hello";
   int result;
@@ -11,8 +12,24 @@ void test_one_pw(){
   process_word(wrd1,ht);
   ioopm_hash_table_lookup(ht,wrd1,&result);
   CU_ASSERT_EQUAL(result,1);
+
+  ioopm_hash_table_destroy(ht);
 }
 
+
+void test_multiple_pros_wrd(){
+  ioopm_hash_table_t *ht = ioopm_hash_table_create();
+  char *wrd1 = "hello";
+  int result;
+
+  for(int i=0;i!=10;i++){
+       process_word(wrd1,ht);
+  }
+  ioopm_hash_table_lookup(ht,wrd1,&result);
+  CU_ASSERT_EQUAL(result,10);
+  ioopm_hash_table_destroy(ht);
+  
+}
 
 
 
@@ -68,8 +85,8 @@ int main() {
   // the test in question. If you want to add another test, just
   // copy a line below and change the information
   if (
-    (CU_add_test(my_test_suite, "A simple test", test1) == NULL) ||
-    (CU_add_test(my_test_suite, "Basic arithmetics", test2) == NULL) ||
+    (CU_add_test(my_test_suite, "One word", test_one_pros_wrd) == NULL) ||
+    (CU_add_test(my_test_suite, "mutliple word", test_multiple_pros_wrd) == NULL) ||
     0
   )
     {
