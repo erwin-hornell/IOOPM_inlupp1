@@ -1,21 +1,69 @@
 CC = gcc
+
 CFLAGS = -Wall -Wextra -g
 LDLIBS = -lcunit
 
-TARGET = hash_table_tests
+PROFLAGS = -pg
+TIME = time --verbose
+VALGRIND = valgrind
+COVERAGE = gcovr -r .
 
-all: $(TARGET)
+TARGET_HASH = hash_table_tests
+TARGET_LIST = linked_list_tests
+TARGET_FREQ = freq-count
 
-$(TARGET): hash_table.c hash_table_tests.c hash_table.h
-	$(CC) $(CFLAGS) hash_table.c hash_table_tests.c -o $(TARGET) $(LDLIBS)
+all: $(TARGET_HASH) $(TARGET_LIST)
 
-test: $(TARGET)
-	./$(TARGET)
 
-valgrind: $(TARGET)
-	valgrind --leak-check=full ./$(TARGET)
+hash_table_tests: hash_table.c hash_table_tests.c
+	$(CC) $(CFLAGS) --coverage $^ -o $@ $(LDLIBS)
+
+linked_list_tests: linked_list.c linked_list_tests.c
+	$(CC) $(CFLAGS) --coverage $^ -o $@ $(LDLIBS)
+
+
+test-hash: $(TARGET_HASH)
+	./$(TARGET_HASH)
+
+test-list: $(TARGET_LIST)
+	./$(TARGET_LIST)
+
+
+valgrind-hash: $(TARGET_HASH)
+	$(VALGRIND) ./$(TARGET_HASH)
+
+valgrind-list: $(TARGET_LIST)
+	$(VALGRIND) ./$(TARGET_LIST)
+
+
+coverage-hash: $(TARGET_HASH)
+	./$(TARGET_HASH)
+	$(COVERAGE) --filter='hash_table.c'
+
+coverage-list: $(TARGET_LIST)
+	./$(TARGET_LIST)
+	$(COVERAGE) --filter='linked_list.c'
+
+
+coverage: coverage-hash coverage-list
+
+freq: hash_table.c
+	$(CC) $(CFLAGS) $^ ./$(TARGET_FREQ).c -o $(TARGET_FREQ)
+
+freq-time: $(TARGET_FREQ)
+	$(TIME) ./$(TARGET_FREQ) $(FILE)
+
+freq-gprof: hash_table.c
+	$(CC) $(CFLAGS) $(PROFLAGS) $^ ./$(TARGET_FREQ).c -o $(TARGET_FREQ)
+	./$(TARGET_FREQ) $(FILE)
+	gprof $(TARGET_FREQ) gmon.out > profile.txt
+	less profile.txt
 
 clean:
-	rm -f $(TARGET)
+	rm -f $(TARGET_HASH) $(TARGET_LIST) $(TARGET_FREQ)
+	rm -f *.gcda *.gcno *.gcov
+	rm -f gmon.out profile.txt
 
-.PHONY: all test valgrind clean
+
+.PHONY: all test-hash test-list valgrind-hash valgrind-list \
+        coverage-hash coverage-list coverage freq freq-time freq-gprof clean
