@@ -20,7 +20,7 @@ int clean_suite(void)
 // functions of your own.
 void test_create_destroy()
 {
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
   CU_ASSERT_PTR_NOT_NULL(ht);
   ioopm_hash_table_destroy(ht);
 }
@@ -28,7 +28,7 @@ void test_create_destroy()
 void test_look_up_empty()
 {
   // create new hash table
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
 
   char *key = "abc";
 
@@ -43,7 +43,7 @@ void test_look_up_empty()
 void test_insert_once()
 {
   // create new hash table
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
 
   char *key = "abc";
   int value = 123;
@@ -66,7 +66,7 @@ void test_insert_once()
 void test_insert_update()
 {
   // create new hash table
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
 
   char *key = "abc";
   value_t result;
@@ -91,7 +91,7 @@ void test_insert_update()
 void test_remove_empty()
 {
   // create new hash table
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
 
   char *key = "abc";
   int res = 0;
@@ -105,7 +105,7 @@ void test_remove_empty()
 void test_remove_existing()
 {
   // create new hash table
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
 
   char *key = "abc";
   int value = 123;
@@ -131,7 +131,7 @@ void test_remove_existing()
 void test_has_key_empty()
 {
   // create new hash table
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
 
   char *key = "abc";
   // insert key-value pair and check that the mapping exists
@@ -143,7 +143,7 @@ void test_has_key_empty()
 void test_has_key_twice()
 {
   // create new hash table
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
 
   char *key1 = "abc";
   int val1 = 123;
@@ -164,7 +164,7 @@ void test_has_key_twice()
 void test_has_key_thrice()
 {
   // create new hash table
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
 
   char *key1 = "a";
   char *key2 = "b";
@@ -193,7 +193,7 @@ void test_has_key_thrice()
 void test_has_key_removed()
 {
   // create new hash table
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
 
   char *key1 = "abc";
   int val1 = 123;
@@ -211,7 +211,7 @@ void test_has_key_removed()
 void test_has_key_removed_twice()
 {
   // create new hash table
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
 
   char *key1 = "a";
   char *key2 = "b";
@@ -241,7 +241,7 @@ void test_has_key_removed_twice()
 void test_size_empty()
 {
   // create new hash table
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
 
   // Size of empty ht
   CU_ASSERT_EQUAL(ioopm_hash_table_size(ht), 0);
@@ -253,7 +253,7 @@ void test_size_empty()
 void test_size_one_entry()
 {
   // create new hash table
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
   char *key = "a";
   int val = 123;
 
@@ -268,7 +268,7 @@ void test_size_one_entry()
 void test_size_mult()
 {
   // create new hash table
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
   int size = 7;
   char *keys[] = {"a", "b", "c", "d", "e", "f", "g"};
   int vals[] = {1, 2, 3, 4, 5, 6, 7};
@@ -288,7 +288,7 @@ void test_size_mult()
 void test_size_remove()
 {
   // create new hash table
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
   char *key = "a";
   int val = 123;
   int res = 0;
@@ -307,7 +307,7 @@ void test_size_remove()
 void test_size_remove_mult()
 {
   // create new hash table
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
 
   int size = 7;
   char *keys[] = {"a", "b", "c", "d", "e", "f", "g"};
@@ -329,7 +329,7 @@ void test_size_remove_mult()
 void test_is_empty_empty()
 {
   // create new hash table
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
 
   // Size of empty ht
   CU_ASSERT_TRUE(ioopm_hash_table_is_empty(ht));
@@ -341,7 +341,7 @@ void test_is_empty_empty()
 void test_is_empty_one_entry()
 {
   // create new hash table
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
   char *key = "a";
   int val = 123;
 
@@ -356,7 +356,7 @@ void test_is_empty_one_entry()
 void test_is_empty_mult()
 {
   // create new hash table
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
   int size = 7;
   char *keys[] = {"a", "b", "c", "d", "e", "f", "g"};
   int vals[] = {1, 2, 3, 4, 5, 6, 7};
@@ -376,7 +376,7 @@ void test_is_empty_mult()
 void test_is_empty_remove()
 {
   // create new hash table
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
   char *key = "a";
   int val = 123;
   int res = 0;
@@ -395,7 +395,7 @@ void test_is_empty_remove()
 void test_is_empty_remove_mult()
 {
   // create new hash table
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
 
   int size = 7;
   char *keys[] = {"a", "b", "c", "d", "e", "f", "g"};
@@ -418,7 +418,7 @@ void test_iterator_once()
 {
   char *key = "a";
   int val = 123;
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
 
   ioopm_hash_table_insert(ht, PTR_AS_ELEM(key), INT_AS_ELEM(val));
 
@@ -440,7 +440,7 @@ void test_iterator_once()
 void test_iterator_empty()
 {
 
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
 
   int iteration_count = 0;
 
@@ -461,7 +461,7 @@ void test_iterator_several_entries()
   char *keys[3] = {"abc", "qwe", "asd"};
   int values[3] = {0, 1, 2};
 
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
   for (int i = 0; i != 3; ++i)
   {
     ioopm_hash_table_insert(ht, PTR_AS_ELEM(keys[i]), INT_AS_ELEM(values[i]));
@@ -486,7 +486,7 @@ void test_iterator_visit_exactly_once()
   char *keys[3] = {"abc", "qwe", "asd"};
   int values[3] = {0, 0, 0};
 
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
   for (int i = 0; i != 3; ++i)
   {
     ioopm_hash_table_insert(ht, PTR_AS_ELEM(keys[i]), INT_AS_ELEM(values[i]));
@@ -530,7 +530,7 @@ void test_iterator_several_per_bucket()
       6, 7, 8, 9, 10, 11,
       12, 13, 14, 15, 16, 17};
 
-  ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+  ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
 
   for (int i = 0; i < 18; ++i)
   {

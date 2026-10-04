@@ -78,7 +78,7 @@ void ioopm_hash_table_destroy(ioopm_hash_table_t *ht)
   free(ht);
 }
 
-size_t string_hash(const value_t key)
+size_t str_hash(const value_t key)
 {
   size_t result = 0;
   char *str = (char *) key.p;

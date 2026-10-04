@@ -3,6 +3,14 @@
 
 #include "linked_list.h"
 
+/**
+* @file linked_list_iterator.h
+* @author Erwin Hörnell, Hjalmar Johansson
+* @date 20/9/2026
+* @brief Iterator for ioopm_list
+*
+*/
+
 typedef struct list_iterator ioopm_list_iterator_t;
 
 /// @brief Create a new iterator

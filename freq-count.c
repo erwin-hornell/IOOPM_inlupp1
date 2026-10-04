@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
         printf("Usage: %s file1 ... filen", argv[0]);
         return 1;
     }
-    ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+    ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
     for (int i = 1; i < argc; ++i)
     {
         process_file(argv[i], ht);
