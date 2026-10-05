@@ -40,7 +40,7 @@ void ioopm_hash_table_destroy(ioopm_hash_table_t *ht);
 /// @param ht hash table operated upon
 /// @param key key to insert
 /// @param value value to insert
-void ioopm_hash_table_insert(ioopm_hash_table_t *ht, value_t key, value_t value);
+void ioopm_hash_table_insert(ioopm_hash_table_t *ht, const value_t key, value_t value);
 
 /// @brief lookup value for key in hash table ht
 /// @param ht hash table operated upon

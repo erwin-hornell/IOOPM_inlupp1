@@ -10,11 +10,12 @@
 /// @param ht a hash table containing the frequencies of the words found so far
 void process_word(char *word, ioopm_hash_table_t *ht)
 {
-    int freq = 0;
+    value_t freq;
+    freq.i = 0;
 
-    if (ioopm_hash_table_lookup(ht, PTR_AS_ELEM(word), &INT_AS_ELEM(freq)))
+    if (ioopm_hash_table_lookup(ht, PTR_AS_ELEM(word), &freq))
     {
-        ioopm_hash_table_insert(ht, PTR_AS_ELEM(word), INT_AS_ELEM(freq + 1));
+        ioopm_hash_table_insert(ht, PTR_AS_ELEM(word), INT_AS_ELEM(freq.i + 1));
     }
     else
     {
@@ -79,7 +80,7 @@ static int cmp_freq_words_reverse(const void *p1, const void *p2)
 /// @param no_words the number of elements in the array
 void sort_freq_words(struct freq_word words[], size_t no_words)
 {
-    qsort(words, no_words, sizeof(struct freq_word), cmp_freq_words_reverse);
+    qsort(words, no_words, sizeof(struct freq_word), cmp_freq_words);
 }
 int main(int argc, char *argv[])
 {
@@ -88,7 +89,9 @@ int main(int argc, char *argv[])
         printf("Usage: %s file1 ... filen", argv[0]);
         return 1;
     }
+    // create key:str hash table
     ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+
     for (int i = 1; i < argc; ++i)
     {
         process_file(argv[i], ht);
@@ -100,6 +103,7 @@ int main(int argc, char *argv[])
 
     int i = 0;
 
+    //adding hash table values to array
     while (!ioopm_hash_table_iterator_at_end(it))
     {
         freq_words[i].word = ioopm_hash_table_iterator_current_key(it).p;
@@ -115,6 +119,8 @@ int main(int argc, char *argv[])
 
 
     sort_freq_words(freq_words, size);
+
+
     for (int i = 0; i < size; ++i)
     {
         printf("%s: %d\n", freq_words[i].word, freq_words[i].freq);

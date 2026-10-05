@@ -50,14 +50,19 @@ coverage: coverage-hash coverage-list
 freq: hash_table.c
 	$(CC) $(CFLAGS) $^ ./$(TARGET_FREQ).c -o $(TARGET_FREQ)
 
-freq-time: $(TARGET_FREQ)
+
+#Runs time om freq-time program
+freq-time: hash_table.c
+	$(CC) $(CFLAGS) $^ ./$(TARGET_FREQ).c -o $(TARGET_FREQ)
 	$(TIME) ./$(TARGET_FREQ) $(FILE)
 
+#Runs gprof on freq-count program
 freq-gprof: hash_table.c
 	$(CC) $(CFLAGS) $(PROFLAGS) $^ ./$(TARGET_FREQ).c -o $(TARGET_FREQ)
 	./$(TARGET_FREQ) $(FILE)
 	gprof $(TARGET_FREQ) gmon.out > profile.txt
 	less profile.txt
+
 
 clean:
 	rm -f $(TARGET_HASH) $(TARGET_LIST) $(TARGET_FREQ)
