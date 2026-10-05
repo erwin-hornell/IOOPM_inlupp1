@@ -7,6 +7,7 @@
 #include <assert.h>
 #include <stdio.h>
 
+
 typedef struct link link_t;
 struct link
 {
@@ -15,11 +16,13 @@ struct link
     link_t *prev;
 };
 
+// Double linked list makes the struct more complex but makes most of the list operations easier.
 struct list
 {
     link_t *first;
     link_t *last;
 };
+
 
 struct list_iterator
 {
@@ -41,7 +44,7 @@ static link_t *link_destroy(link_t *link)
     free(link);
     return next;
 }
-
+// Is longer due to the list being double linked
 static value_t unlink(ioopm_list_t *list, link_t *link)
 {
     if (link->prev)
@@ -85,6 +88,8 @@ static link_t *link_create(link_t *next, link_t *prev, value_t value)
     link->value = value;
     return link;
 }
+
+// Is longer due to the list being double linked
 static link_t *link_add(ioopm_list_t *list, link_t *next, link_t *prev, value_t value)
 {
     link_t *new = link_create(next, prev, value);
@@ -107,6 +112,7 @@ static link_t *link_add(ioopm_list_t *list, link_t *next, link_t *prev, value_t 
     }
     return new;
 }
+
 void ioopm_list_append(ioopm_list_t *list, value_t value)
 {
     link_add(list, NULL, list->last, value);
@@ -127,6 +133,7 @@ value_t ioopm_list_last(ioopm_list_t *list)
     return list->last->value;
 }
 
+//There is always a preivous pointer even if there are no links
 static link_t **list_find_previous_ptr(ioopm_list_t *list, size_t index)
 {
     link_t **ptr = &list->first;
@@ -235,7 +242,7 @@ void ioopm_list_iterator_insert(ioopm_list_iterator_t *iter, value_t value)
     {
         link_t *current = *iter->prev_ptr;
 
-        link_t *new = link_add(iter->list, current,current->prev, value);
+        link_t *new = link_add(iter->list, current, current->prev, value);
 
         iter->prev_ptr = &new->next;
     }

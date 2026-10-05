@@ -3,13 +3,9 @@
 #include "common.h"
 /**
 * @file hash_table.h
-* @author write both your names here
-* @date write the date you started working on this
+* @author Erwin Hörnell, Hjalmar Johansson
+* @date 17/9/2026
 * @brief Simple hash table that maps string keys to integer values.
-*
-* Here typically goes a more extensive explanation of what the header
-* defines. Doxygens tags are words preceeded by either a backslash @\
-* or by an at symbol @@.
 *
 */
 
@@ -20,13 +16,15 @@ typedef size_t ioopm_hash_function(const value_t key);
 
 /// @brief hashes keys as strings
 /// @return hashed unsinged interger
-size_t string_hash(const value_t key);
+size_t str_hash(const value_t key);
 
 
 /// @brief compares keys as strings
 /// @return true if the keys match as strings
 bool str_comp(const value_t a, const value_t b);
 
+//NOTE: Might have be better add create function for each of the diffrent types of key instead of 
+// adding public hash and compare functions
 
 /// @brief Create a new hash table
 /// @return A new empty hash table

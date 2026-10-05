@@ -2,9 +2,24 @@
 #include <stdbool.h>
 #include "common.h"
 
+/**
+* @file linked_list.h
+* @author Erwin Hörnell, Hjalmar Johansson
+* @date 20/9/2026
+* @brief Simple double linked list
+*
+*/
+
+/**
+ * NOTE: In its current implementaion the list suports the @union value as value to its nodes
+ *       This alows the user to store most types in the list. There is however no way of restricting
+ *       a crtated list to only 1 type as to make it easer to avoid errors containing to unknown types.
+ *      
+ */
+
 typedef union value value_t;
 
-typedef struct list ioopm_list_t; /// Meta: struct definition goes in C file
+typedef struct list ioopm_list_t; 
 
 /// @brief Creates a new empty list
 /// @return an empty linked list
