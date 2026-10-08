@@ -5,7 +5,6 @@
 #include "linked_list.h"
 #include "linked_list_iterator.h"
 #include <assert.h>
-#include <stdio.h>
 
 
 typedef struct link link_t;
@@ -23,7 +22,7 @@ struct list
     link_t *last;
 };
 
-
+//use double pointer to always have a value
 struct list_iterator
 {
     ioopm_list_t *list;

@@ -5,6 +5,7 @@
 #include "hash_table_iterator.h"
 #include "hash_table.h"
 #define Delimiters "+-#@()[]{}.,:;!? \t\n\r"
+#define FILE_COUNTER 100
 /// @brief Process a single word, updating its frequency
 /// @param word the word to process
 /// @param ht a hash table containing the frequencies of the words found so far
@@ -70,12 +71,8 @@ static int cmp_freq_words(const void *p1, const void *p2)
     const struct freq_word *w2 = p2;
     return w1->freq - w2->freq;
 }
-/// @brief Like @cmp_freq_words@ but with the comparison result reversed
-static int cmp_freq_words_reverse(const void *p1, const void *p2)
-{
-    return -cmp_freq_words(p1, p2);
-}
-/// @brief Sort an array of @freq_word@s in descending frequency order
+
+/// @brief Sort an array of @freq_word@s FILE_COUNTER times in frequency order
 /// @param words the array to be sorted
 /// @param no_words the number of elements in the array
 void sort_freq_words(struct freq_word words[], size_t no_words)
@@ -90,11 +87,11 @@ int main(int argc, char *argv[])
         return 1;
     }
     // create key:str hash table
-    ioopm_hash_table_t *ht = ioopm_hash_table_create(string_hash, str_comp);
+    ioopm_hash_table_t *ht = ioopm_hash_table_create(str_hash, str_comp);
 
-    for (int i = 1; i < argc; ++i)
+    for (int i = 1; i < FILE_COUNTER; ++i)
     {
-        process_file(argv[i], ht);
+        process_file(argv[1], ht);
     }
     int size = ioopm_hash_table_size(ht);
     struct freq_word freq_words[size];

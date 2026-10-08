@@ -11,9 +11,9 @@
 */
 
 /**
- * NOTE: In its current implementaion the list suports the @union value as value to its nodes
+ * NOTE: In its current implementaion the list suports the @union value_t as value to its nodes
  *       This alows the user to store most types in the list. There is however no way of restricting
- *       a crtated list to only 1 type as to make it easer to avoid errors containing to unknown types.
+ *       a crtated list to only accept entries of that type.
  *      
  */
 

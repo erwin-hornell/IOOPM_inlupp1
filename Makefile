@@ -6,7 +6,7 @@ LDLIBS = -lcunit
 PROFLAGS = -pg
 TIME = time --verbose
 VALGRIND = valgrind
-COVERAGE = gcovr -r .
+COVERAGE = gcovr 
 
 TARGET_HASH = hash_table_tests
 TARGET_LIST = linked_list_tests
@@ -38,11 +38,13 @@ valgrind-list: $(TARGET_LIST)
 
 coverage-hash: $(TARGET_HASH)
 	./$(TARGET_HASH)
-	$(COVERAGE) --filter='hash_table.c'
+	$(COVERAGE) -r . --filter='hash_table.c'
+	$(COVERAGE) --txt-metric branch --filter='hash_table.c'
 
 coverage-list: $(TARGET_LIST)
 	./$(TARGET_LIST)
-	$(COVERAGE) --filter='linked_list.c'
+	$(COVERAGE) -r . --filter='linked_list.c'
+	$(COVERAGE) --txt-metric branch --filter='linked_list.c'
 
 
 coverage: coverage-hash coverage-list
