@@ -117,7 +117,7 @@ The hash table and linked list use value_t to allow the data structures to store
 
 Both the list and hash table lack the ability to check added values if there type matches the type of the rest of the structure. Making debugging potentially harder.
 
-Niether the list or hash table has ownership of pointers inserted or used as keys.
+Neither the list or hash table has ownership of pointers inserted or used as keys.
 
 # Cleaning generated files
 
